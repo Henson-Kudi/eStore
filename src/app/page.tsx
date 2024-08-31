@@ -4,6 +4,8 @@ import Footers from "@/core/components/footers";
 import SearchComponent from "@/core/components/search";
 import test from "@/app/testshoe.avif"
 import ProductGrid, { Product } from "@/core/components/grid-container";
+import Navbar from "@/core/components/navbar";
+import TextCarousel from "@/core/components/navbar-set-timeout";
 
 const products: Product[] = [
   {
@@ -53,7 +55,9 @@ export default function Home() {
       {/* <Footers />
       <ContactUs /> */}
       {/* <SearchComponent/> */}
-      <ProductGrid products={products} />
+      {/* <ProductGrid products={products} /> */}
+      <TextCarousel />
+      <Navbar />
     </main>
   )
 }
