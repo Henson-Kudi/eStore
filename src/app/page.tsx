@@ -1,10 +1,16 @@
-import Image from "next/image";
+"use client"
+import ContactUs from "@/core/components/contact-us";
+import Footers from "@/core/components/footers";
+import SearchComponent from "@/core/components/search";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="">
   
       E_STORE
+      {/* <Footers />
+      <ContactUs /> */}
+      <SearchComponent />
     </main>
   )
 }
