@@ -1,4 +1,5 @@
 // components/SearchComponent.tsx
+"use client"
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
@@ -22,12 +23,12 @@ const SearchComponent: React.FC = () => {
               id="search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-10 py-2 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-black-800 peer"
+              className="w-full px-10 py-2 bg-gray-200 border-1 border-gray-200  focus:outline-none focus:ring-2 focus:ring-black focus:border-black peer"
               placeholder="Search..."
             />
             <label
               htmlFor="search"
-              className="absolute left-2 -top-3 bg-gray-100 px-1 text-sm text-gray-600 transition-all peer-focus:text-black-800"
+              className="absolute left-2 -top-3 bg-gray-100 px-1 text-sm text-gray-600 transition-all peer-focus:text-black"
             >
               Search
             </label>
