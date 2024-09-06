@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/core/pages/landingPage/navbar";
-import TextCarousel from "@/core/pages/landingPage/navbar-set-timeout";
-import Footers from "@/core/pages/landingPage/footers";
+import Navbar from "@/core/pages/landing-page/navbar";
+import TextCarousel from "@/core/pages/landing-page/navbar-set-timeout";
+import Footers from "@/core/pages/landing-page/footers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +23,7 @@ export default function RootLayout({
         <TextCarousel />
         <Navbar />
         {children}
-        {/* <Footers/>  */}
+        <Footers/> 
         </body>
     </html>
   );

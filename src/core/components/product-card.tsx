@@ -15,7 +15,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, description, price,
     <div className="flex flex-col">
       <div className="relative">
         <Image src={imageUrl} alt="Product" width={300} height={300} className="w-full h-auto" />
-        <span className="absolute top-2 left-2 bg-red-500 text-white px-1 py-1 text-sm ">
+        <span className="absolute top-2 left-2 bg-red-500 text-white md:px-1 md:py-1 text-sm ">
           {discount}% SAVE
         </span>
       </div>

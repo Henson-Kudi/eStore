@@ -1,11 +1,11 @@
 "use client"
 import React from 'react';
-import Carousel from './carousel';
 
 const HeroSection: React.FC = () => {
   return (
     <>
     <div className="relative bg-gray-900 flex-col h-[50vh] md:h-[60vh] lg:h-[70vh] flex items-center justify-center overflow-hidden">
+      {/* image this way for dev purposes */}
       <div
         className="absolute inset-0 bg-cover bg-center z-0"
         style={{
@@ -26,8 +26,6 @@ const HeroSection: React.FC = () => {
         </h1>
       </div>
     </div>
-      <Carousel />
-      
       </>
   );
 };

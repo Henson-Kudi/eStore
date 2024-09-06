@@ -9,11 +9,13 @@ import {
   SheetClose,
   SheetContent,
 } from "@/components/ui/sheet"
-import HeroSection from './hero-section';
+import Link from 'next/link';
+
+//dummy data for dev purposes
 
 const shoeTypes = [
   'Sneakers', 'Boots', 'Sandals', 'Loafers',
-  'Oxfords', 'Slip-ons', 'Athletic', 'Dress Shoess', 'Dress Shoesss', 'Dress Shoesssss', 'Dress Shoeses'
+  'Oxfords', 'Slip-ons', 'Athletic'
 ];
 
 const shoeCategories: Record<string, string[]> = {
@@ -24,10 +26,7 @@ const shoeCategories: Record<string, string[]> = {
   'Oxfords': ['Plain', 'Cap Toe', 'Wingtip'],
   'Slip-ons': ['Moccasin', 'Espadrille'],
   'Athletic': ['Running', 'Basketball', 'Training'],
-  'Dress Shoess': ['Formal', 'Casual'],
-  'Dress Shoesss': ['Type1', 'Type2'],
-  'Dress Shoesssss': ['TypeA', 'TypeB'],
-  'Dress Shoeses': ['Category1', 'Category2'],
+
 };
 
 const Navbar: React.FC = () => {
@@ -99,13 +98,13 @@ const Navbar: React.FC = () => {
           </Sheet>
 
           <p className='text-black md:invisible lg:invisible'>.</p>
-          <h1 className="text-xs lg:text-1xl font-bold">PRESTIGE ATTIRE</h1>
+          <Link href={"/"} className="text-xs lg:text-1xl font-bold hover:text-gray-600 cursor-pointer">PRESTIGE ATTIRE</Link>
           <div className="flex items-center space-x-4">
             <div className="relative">
-              <FaSearch className="invisible md:visible absolute right-3 top-1/2 transform -translate-y-1/2" />
+              <FaSearch className="invisible md:visible absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer hover:text-gray-600" />
             </div>
-            <User className='text-sm md:text-xl' />
-            <FaCartShopping />
+            <User className='text-sm md:text-xl cursor-pointer hover:text-gray-600' />
+            <FaCartShopping  className='cursor-pointer hover:text-gray-600'/>
           </div>
         </div>
       </div>
@@ -126,7 +125,7 @@ const Navbar: React.FC = () => {
           className="absolute bg-black h-44 w-44 border-2 border-t-slate-100 text-white z-10"
           style={{ top: `${categoryPosition.top}px`, left: `${categoryPosition.left}px` }}
         >
-          <div className="container mx-auto px-4 py-2 ">
+          <div className="container mx-auto px-4 py-2  cursor-pointer">
             <div className="grid grid-cols-1 gap-2">
               {shoeCategories[activeLink]?.map((category, index) => (
                 <div key={index} className="">{category}</div>
