@@ -1,11 +1,11 @@
-import {ProfileForm} from "@/core/pages/auth/profile"
+import {SignUp} from "@/core/pages/auth/sign-up"
 
-function SignUp() {
+function SignUpPage() {
   return (
     <div>
-      <ProfileForm />
+      <SignUp />
     </div>
   )
 }
 
-export default SignUp
+export default SignUpPage
