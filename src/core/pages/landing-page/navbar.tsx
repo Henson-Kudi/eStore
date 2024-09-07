@@ -10,7 +10,7 @@ import {
   SheetContent,
 } from "@/components/ui/sheet"
 import Link from 'next/link';
-import SearchFromNavbar from '@/core/components/search-navbar';
+import SearchFromNavbar from '@/core/components/search-sheet';
 
 //dummy data for dev purposes
 
