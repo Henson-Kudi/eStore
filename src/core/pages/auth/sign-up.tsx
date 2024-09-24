@@ -34,12 +34,12 @@ export function SignUp() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className='flex flex-col gap-2 items-center justify-center pt-10'>
-          <div className='w-[50%] flex flex-col gap-8'>
-            <div className=' flex flex-col items-center'>
-              <p className='font-bold text-2xl'>SIGN UP</p>
-              <p>Please fill in the information below:</p>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8 lg:h-screen justify-center py-10 lg:py-0">
+        <div className='flex flex-col gap-2 lg:items-center justify-center'>
+          <div className='lg:w-[45%] flex flex-col gap-8 px-2 lg:px-0'>
+            <div className=' flex flex-col items-center gap-4'>
+              <h2 className='font-bold lg:text-4xl text-2xl'>SIGN UP</h2>
+              <p className=' text-gray-700 lg:text-2xl font-sans text-lg '>Please fill in the information below:</p>
             </div>
             <FormField
               control={form.control}
@@ -91,9 +91,9 @@ export function SignUp() {
             />
           </div>
         </div>
-        <div className='flex flex-col items-center gap-1  justify-center'>
-          <Button type="submit" size={'lg'} className='w-[50%]'>CREATE ACCOUNT</Button>
-          <Link  href={"/sign-in"} className='text-gray-700 pb-4'>Already have an account? Login</Link>
+        <div className='flex flex-col items-center gap-4 justify-center lg:pt-4 pt-2'>
+          <button type="submit"  className='lg:w-[45%] w-[95%] lg:py-6 py-3 bg-black text-white text-sm lg:text-2xl px-2 lg:px-0'>CREATE ACCOUNT</button>
+          <Link  href={"/sign-in"} className='text-gray-700 pt-2 lg:pt-6 lg:text-2xl font-sans text-lg'>Already have an account? Login</Link>
         </div>
       </form>
     </Form>

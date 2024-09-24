@@ -68,12 +68,12 @@ export default () => {
   ]
 
   return (
-    <footer className=" bg-black px-4 py-5 max-w-full md:px-8">
+    <footer className=" bg-black lg:px-12 px-4 h-[600px] flex flex-col justify-center gap-8">
       <div className="gap-6 justify-between sm:flex sm:items-start">
-        <div className="flex-col">
-          <div className="max-w-xs flex flex-col gap-4">
-            <p className="text-white mt-2 font-bold">NEWSLETTER</p>
-            <p className="text-gray-300 pb-2">Sign up and get exclusive discount</p>
+        <div className=" flex flex-col gap-4">
+          <div className="max-w-md flex flex-col gap-4">
+            <p className="text-white mt-2 font-bold lg:text-2xl text-lg">NEWSLETTER</p>
+            <p className="text-gray-300 pb-2 lg:text-2xl text-lg">Sign up and get exclusive discount</p>
           </div>
 
           <form onSubmit={(e) => e.preventDefault()}>
@@ -81,9 +81,9 @@ export default () => {
               <input
                 type="email"
                 placeholder="E-mail"
-                className="w-full p-4 outline-none bg-gray-200"
+                className="w-full lg:p-6 p-2 outline-none bg-gray-200"
               />
-              <button className="p-2.5 text-white text-xs md:text-1xl bg-gray-800 outline-none shadow-md focus:shadow-none sm:px-5 w-[50%]">
+              <button className="lg:p-4 p-1 text-white text-sm md:text-1xl bg-gray-800 outline-none shadow-md focus:shadow-none sm:px-5 w-[50%]">
                 SUBSCRIBE
               </button>
             </div>
@@ -91,15 +91,15 @@ export default () => {
         </div>
 
         <div className="flex flex-col justify-between sm:flex md:space-y-0 md:mt-0 pt-4 md:pt-0">
-          <p className="text-white mt-2 font-bold md:pb-2">Footers Menu</p>
-          <div className="flex flex-col text-gray-300 gap-2">
-            <p className=" hover:text-gray-600 cursor-pointer">Contact Us</p>
-            <p className=" hover:text-gray-600 cursor-pointer">Search</p>
+          <p className="text-white mt-2 font-bold md:pb-2 lg:text-2xl text-lg">Footers Menu</p>
+          <div className="flex flex-col  text-gray-300 gap-4">
+            <p className=" hover:text-gray-600 cursor-pointer lg:text-2xl text-lg">Contact Us</p>
+            <p className=" hover:text-gray-600 cursor-pointe lg:text-2xl text-lg">Search</p>
           </div>
         </div>
       </div>
-      <div className="mt-8 py-6 border-t items-center justify-between sm:flex">
-        <div className="mt-4 sm:mt-0 text-gray-600">
+      <div className="mt-8 lg:py-6 border-t items-center justify-between sm:flex">
+        <div className="mt-4 sm:mt-0 text-gray-600 lg:text-2xl text-lg">
           &copy; 2022 - PRESTIGE ATTIRE.
         </div>
       </div>

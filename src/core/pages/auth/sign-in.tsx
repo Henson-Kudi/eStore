@@ -16,7 +16,6 @@ import { formSchema } from '@/schemas/form-schema';
 import Link from 'next/link';
 
 export function SignIp() {
-  // Initialize the form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,12 +31,12 @@ export function SignIp() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className='flex flex-col gap-2 items-center justify-center pt-10'>
-          <div className='w-[50%] flex flex-col gap-8'>
-            <div className=' flex flex-col items-center'>
-              <p className='font-bold text-2xl'>SIGN IN</p>
-              <p>Please fill in the information below:</p>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8 lg:h-screen justify-center py-10 lg:py-0">
+        <div className='flex flex-col gap-4 lg:items-center'>
+          <div className='lg:w-[45%] flex flex-col gap-8 px-2 lg:px-0'>
+            <div className=' flex flex-col items-center gap-2'>
+              <h2 className='font-bold lg:text-4xl text-2xl'>SIGN IN</h2>
+              <p className=' text-gray-700 lg:text-2xl font-sans text-lg'>Please fill in the information below:</p>
             </div>
             <FormField
               control={form.control}
@@ -66,8 +65,8 @@ export function SignIp() {
           </div>
         </div>
         <div className='flex flex-col items-center gap-1  justify-center'>
-          <Button type="submit" size={'lg'} className='w-[50%]'>Login</Button>
-          <Link href={"/sign-up"} className='text-gray-700 pb-4'>Don't have an account? Register</Link>
+          <button type="submit"  className='lg:w-[45%] lg:py-6 py-3 bg-black text-white text-sm lg:text-2xl w-[95%] px-2 lg:px-0'>Login</button>
+          <Link href={"/sign-up"} className='text-gray-700  pt-2 lg:pt-6 lg:text-2xl font-sans text-lg'>Don't have an account? Register</Link>
         </div>
       </form>
     </Form>
