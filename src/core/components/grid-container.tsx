@@ -27,9 +27,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="flex justify-start mb-4 space-x-2">
+      <div className="flex justify-start mb-4 space-x-2 border-t-2 border-b-2 border-gray-300 ">
         <button onClick={() => setGridLayout('three')} className="p-2">
-          <FaThLarge />
+          <FaThLarge  className='bg-gray-100'/>
         </button>
         <button onClick={() => setGridLayout('four')} className="p-2">
           <FaTh />

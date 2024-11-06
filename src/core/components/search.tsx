@@ -1,4 +1,3 @@
-// components/SearchComponent.tsx
 "use client"
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
@@ -9,11 +8,10 @@ const SearchComponent: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Search term:', searchTerm);
-    // Implement your search logic here
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+    <div className="flex justify-center items-center min-h-screen bg-black p-4">
       <div className="w-full max-w-md">
         <h2 className="text-3xl font-bold text-center mb-6">SEARCH</h2>
         <form onSubmit={handleSubmit} className="relative">
