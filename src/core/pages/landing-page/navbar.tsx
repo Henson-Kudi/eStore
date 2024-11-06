@@ -10,7 +10,7 @@ import {
   SheetContent,
 } from "@/components/ui/sheet"
 import Link from 'next/link';
-import TextCarousel from './navbar-set-timeout';
+import SearchFromNavbar from '@/core/components/search-sheet';
 
 //dummy data for dev purposes
 
@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrollDirection, setScrollDirection] = useState("up");
-
+  //display categories
 
   const handleShoeTypeClick = (type: string, event: React.MouseEvent<HTMLDivElement>) => {
     if (activeLink === type) {
@@ -57,6 +57,8 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(false);
   };
 
+  // handling category click
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
@@ -70,37 +72,43 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
+  //handling navbar scroll
+
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
     const controlNavbar = () => {
-      if (typeof window !== 'undefined') {
-        const currentScrollY = window.scrollY;
+      const currentScrollY = window.scrollY;
 
-        if (currentScrollY > lastScrollY) {
-          // Scrolling down
-          setScrollDirection("down");
-          setIsVisible(false);
-        } else if (currentScrollY < lastScrollY) {
-          // Scrolling up
-          setScrollDirection("up");
-          setIsVisible(true);
-          // Scroll the page down by the navbar height to reveal content
-          if (navRef.current) {
-            window.scrollBy(0, -navRef.current.offsetHeight);
-          }
-        }
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        setScrollDirection("down");
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setScrollDirection("up");
+        setIsVisible(true);
+      }
 
-        // Update last scroll position
-        setLastScrollY(currentScrollY);
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(controlNavbar);
+        ticking = true;
       }
     };
 
     if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', controlNavbar);
+      window.addEventListener('scroll', onScroll);
       return () => {
-        window.removeEventListener('scroll', controlNavbar);
+        window.removeEventListener('scroll', onScroll);
       };
     }
-  }, [lastScrollY]);
+  }, []);
 
 
   return (
@@ -112,7 +120,7 @@ const Navbar: React.FC = () => {
       />
 
       <div className="container">
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center pt-2 justify-between ">
           <Sheet>
             <SheetTrigger asChild>
               <button
@@ -141,11 +149,13 @@ const Navbar: React.FC = () => {
             </SheetContent>
           </Sheet>
 
-          <p className='text-black hidden'>.</p>
-          <Link href={"/"} className="text-xs lg:text-1xl font-bold hover:text-gray-600 cursor-pointer">PRESTIGE ATTIRE</Link>
+          <div className=' flex flex-col'>
+            <p className='text-black invisible'>.</p>
+            <Link href={"/"} className="text-xs lg:text-2xl font-bold hover:text-gray-600 cursor-pointer">PRESTIGE ATTIRE</Link>
+          </div>
           <div className="flex items-center space-x-4">
             <div className="relative">
-              <FaSearch className="invisible md:visible absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer hover:text-gray-600" />
+              <SearchFromNavbar />
             </div>
             <User className='text-sm md:text-xl cursor-pointer hover:text-gray-600' />
             <FaCartShopping className='cursor-pointer hover:text-gray-600' />
@@ -163,6 +173,7 @@ const Navbar: React.FC = () => {
           </div>
         ))}
       </div>
+
 
       {activeLink && (
         <div
