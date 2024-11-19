@@ -1,6 +1,5 @@
-import React from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetClose } from "@/components/ui/sheet";
-import { images } from '../pages/landing-page/carousel';
+import React, { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetClose, SheetTrigger } from "@/components/ui/sheet";
 import { ShoppingCart, X } from 'lucide-react'; // Assuming you're using lucide-react for icons
 
 // Define a type for the item in the cart
@@ -19,13 +18,13 @@ interface CartItemProps {
 
 const CartItem: React.FC<CartItemProps> = ({ item, onAdd, onRemove }) => {
   return (
-    <div className="flex items-center justify-between p-4 border-b">
+    <div className="flex items-center justify-between p-2 border-b">
       <img src={item.image} alt={item.name} className="h-16 w-16 object-cover" />
       <div className="flex flex-col">
         <span className="font-semibold">{item.name}</span>
-        <div className="flex items-center mt-2">
-          <button onClick={onRemove} className="bg-red-500 text-white px-2 py-1 rounded">Remove</button>
-          <button onClick={onAdd} className="bg-green-500 text-white px-2 py-1 rounded ml-2">Add</button>
+        <div className="flex mt-2">
+          <button onClick={onRemove} className="bg-red-500 text-white px-1 py-1 rounded">Remove</button>
+          <button onClick={onAdd} className="bg-black text-white px-1 py-1 rounded ml-2">Add</button>
         </div>
       </div>
     </div>
@@ -34,48 +33,43 @@ const CartItem: React.FC<CartItemProps> = ({ item, onAdd, onRemove }) => {
 
 // Define props for the CartSheet component
 interface CartSheetProps {
-  cartItems: CartItemType[]; // Array of items in the cart
-  onCheckout: () => void; // Function to handle checkout
+  cartItems: CartItemType[];
+  onCheckout: () => void; 
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const CartSheet: React.FC<CartSheetProps> = ({ cartItems, onCheckout }) => {
+const CartSheet: React.FC<CartSheetProps> = ({cartItems, onCheckout, isOpen, onClose }) => {
+
   return (
-    <Sheet>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle><ShoppingCart className='text-white'></ShoppingCart></SheetTitle>
-          <SheetClose>
-            <X className="h-5 w-5" />
-            <span className="sr-only">Close</span>
-          </SheetClose>
-        </SheetHeader>
+    <Sheet open={isOpen} onOpenChange={onClose}>
+    <SheetContent side={'right'}>
+      {cartItems.length === 0 ? (
+        <div className="text-center p-4">Your cart is empty.</div>
+      ) : (
+        cartItems.map((item) => (
+          <CartItem
+            key={item.id}
+            item={item}
+            onAdd={() => console.log(`Add ${item.name}`)}
+            onRemove={() => console.log(`Remove ${item.name}`)}
+          />
+        ))
+      )}
 
-        {/* Display Cart Items */}
-        {cartItems.length === 0 ? (
-          <div className="text-center p-4">Your cart is empty.</div>
-        ) : (
-          cartItems.map((item) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              onAdd={() => console.log(`Add ${item.name}`)} // Replace with actual add logic
-              onRemove={() => console.log(`Remove ${item.name}`)} // Replace with actual remove logic
-            />
-          ))
-        )}
+      <button
+        onClick={onCheckout}
+        className="w-full bg-black text-white py-2 rounded  mt-52"
+      >
+        Checkout
+      </button>
+      
+      <SheetClose asChild>
+      </SheetClose>
+    </SheetContent>
+  </Sheet>
+);
 
-        {/* Checkout Button */}
-        <SheetFooter>
-          <button 
-            onClick={onCheckout} 
-            className="w-full bg-blue-500 text-white py-2 rounded"
-          >
-            Checkout
-          </button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  );
 };
 
 export default CartSheet;

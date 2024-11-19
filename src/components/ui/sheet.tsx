@@ -43,7 +43,7 @@ const sheetVariants = cva(
 
 interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-    VariantProps<typeof sheetVariants> {}
+  VariantProps<typeof sheetVariants> { }
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
@@ -56,11 +56,13 @@ const SheetContent = React.forwardRef<
       className={sheetVariants({ side })}
       {...props}
     >
+      <div className="flex justify-between items-center mb-4">
+        <SheetPrimitive.Close className="ml-auto">
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </SheetPrimitive.Close>
+      </div>
       {props.children}
-      <SheetPrimitive.Close>
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </SheetPrimitive.Close>
     </SheetPrimitive.Content>
   </SheetPortal>
 ))
