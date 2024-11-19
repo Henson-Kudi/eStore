@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Button } from "@/components/ui/button"
+
 import {
   Form,
   FormControl,
@@ -32,8 +32,8 @@ export function SignIp() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8 lg:h-screen justify-center py-10 lg:py-0">
-        <div className='flex flex-col gap-4 lg:items-center'>
-          <div className='lg:w-[45%] flex flex-col gap-8 px-2 lg:px-0'>
+        <div className='flex flex-col gap-4 items-center'>
+          <div className='lg:w-[45%] md:w-[95%]   flex flex-col gap-8 px-2 lg:px-0'>
             <div className=' flex flex-col items-center gap-2'>
               <h2 className='font-bold lg:text-4xl text-2xl'>SIGN IN</h2>
               <p className=' text-gray-700 lg:text-2xl font-sans text-lg'>Please fill in the information below:</p>
@@ -49,6 +49,7 @@ export function SignIp() {
                   <FormMessage />
                 </FormItem>
               )}
+            
             />
             <FormField
               control={form.control}
@@ -65,7 +66,7 @@ export function SignIp() {
           </div>
         </div>
         <div className='flex flex-col items-center gap-1  justify-center'>
-          <button type="submit"  className='lg:w-[45%] lg:py-6 py-3 bg-black text-white text-sm lg:text-2xl w-[95%] px-2 lg:px-0'>Login</button>
+          <button type="submit"  className='lg:w-[45%] w-[93%] lg:py-6 py-3 bg-black text-white text-sm lg:text-2xl px-2 lg:px-0'>Login</button>
           <Link href={"/sign-up"} className='text-gray-700  pt-2 lg:pt-6 lg:text-2xl font-sans text-lg'>Don't have an account? Register</Link>
         </div>
       </form>
