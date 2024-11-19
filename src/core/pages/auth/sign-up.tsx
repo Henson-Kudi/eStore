@@ -34,8 +34,8 @@ export function SignUp() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8 lg:h-screen justify-center py-10 lg:py-0">
-        <div className='flex flex-col gap-2 lg:items-center justify-center'>
-          <div className='lg:w-[45%] flex flex-col gap-8 px-2 lg:px-0'>
+        <div className='flex flex-col gap-2 items-center justify-center'>
+          <div className='lg:w-[45%] md:w-[95%] flex flex-col gap-8 px-2 lg:px-0'>
             <div className=' flex flex-col items-center gap-4'>
               <h2 className='font-bold lg:text-4xl text-2xl'>SIGN UP</h2>
               <p className=' text-gray-700 lg:text-2xl font-sans text-lg '>Please fill in the information below:</p>
@@ -91,7 +91,7 @@ export function SignUp() {
           </div>
         </div>
         <div className='flex flex-col items-center gap-4 justify-center lg:pt-4 pt-2'>
-          <button type="submit"  className='lg:w-[45%] w-[95%] lg:py-6 py-3 bg-black text-white text-sm lg:text-2xl px-2 lg:px-0'>CREATE ACCOUNT</button>
+          <button type="submit"  className='lg:w-[45%] w-[93%] lg:py-6 py-3 bg-black text-white text-sm lg:text-2xl px-2 lg:px-0'>CREATE ACCOUNT</button>
           <Link  href={"/sign-in"} className='text-gray-700 pt-2 lg:pt-6 lg:text-2xl font-sans text-lg'>Already have an account? Login</Link>
         </div>
       </form>

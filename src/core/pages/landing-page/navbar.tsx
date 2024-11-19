@@ -51,8 +51,8 @@ const Navbar: React.FC = () => {
       const navRect = navRef.current?.getBoundingClientRect();
       if (navRect) {
         setCategoryPosition({
-          top: rect.bottom - navRect.top,
-          left: rect.left - navRect.left,
+          top: rect.bottom + window.scrollY,
+          left: rect.left,
         });
       }
     }
@@ -77,14 +77,18 @@ const Navbar: React.FC = () => {
 
   const handleCheckout = () => {
     console.log('Proceeding to checkout...');
+    setIsCartOpen(prev => !prev);
+
   };
 
-  function setCartOpens() {
-    setIsCartOpen(true)
-  }
+  // Toggle cart visibility
+  const setCartOpens = () => {
+    console.log('Shopping cart clicked');
+    setIsCartOpen(prev => !prev);
+  };
 
   return (
-    <nav className={`bg-black text-white sticky top-0 left-0 right-0 z-50 transition-all duration-300 px-6 lg:px-10`} ref={navRef}>
+    <nav className={`bg-black text-white sticky top-0 left-0 right-0 z-50 transition-all duration-300 px-6 lg:px-10`}>
       <div className="flex items-center justify-between py-2">
         {/* Mobile Menu Button */}
         <Sheet>
@@ -101,7 +105,7 @@ const Navbar: React.FC = () => {
               {shoeTypes.map((type) => (
                 <div
                   key={type}
-                  className={`block py-2 ${activeLink === type ? 'font-bold' : ''}`}
+                  className={`block py-2 border-b border-gray-300 ${activeLink === type ? 'hover:bg-gray-300' : ''}`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {type}
@@ -127,16 +131,20 @@ const Navbar: React.FC = () => {
           <Link href={'/sign-up'}>
             <User className=" cursor-pointer hover:text-gray-600" />
           </Link>
+
           <ShoppingCart
             className="cursor-pointer hover:text-gray-600"
             onClick={setCartOpens}
           />
-          {isCartOpen && (
-            <CartSheet
-              cartItems={cartItems}
-              onCheckout={handleCheckout}
-            />
-          )}        </div>
+
+          {/* Render CartSheet based on isCartOpen */}
+          <CartSheet
+            cartItems={cartItems}
+            onCheckout={handleCheckout}
+            isOpen={isCartOpen} // Pass the open state
+            onClose={() => setIsCartOpen(false)} // Pass the close function
+          />
+        </div>
       </div>
 
       {/* Desktop Menu */}
@@ -155,8 +163,8 @@ const Navbar: React.FC = () => {
       {/* Dropdown for Categories */}
       {activeLink && (
         <div
-          className="absolute bg-black h-44 w-44 border-2 border-t-slate-100 text-white z-10"
-          style={{ top: `${categoryPosition.top}px`, left: `${categoryPosition.left}px` }}
+          className="absolute bg-black h-auto w-44 border-2 border-t-slate-100 text-white z-10"
+          style={{ top: `${categoryPosition.left}px`, left: `${categoryPosition.left}px` }}
         >
           <div className="container mx-auto px-4 py-2">
             <div className="grid grid-cols-1 gap-2">
