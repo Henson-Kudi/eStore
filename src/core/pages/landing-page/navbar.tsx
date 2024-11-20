@@ -48,19 +48,17 @@ const Navbar: React.FC = () => {
     } else {
       setActiveLink(type);
       const rect = event.currentTarget.getBoundingClientRect();
-      const navRect = navRef.current?.getBoundingClientRect();
-      if (navRect) {
+      const parentRect = event.currentTarget.parentElement?.getBoundingClientRect();
+      if (parentRect) {
         setCategoryPosition({
-          top: rect.bottom + window.scrollY,
-          left: rect.left,
+          left: rect.left - parentRect.left,
+          top: rect.bottom - parentRect.top + 10
         });
       }
     }
     setIsMenuOpen(false);
   };
-
   // handling category click
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
@@ -76,19 +74,17 @@ const Navbar: React.FC = () => {
 
 
   const handleCheckout = () => {
-    console.log('Proceeding to checkout...');
     setIsCartOpen(prev => !prev);
 
   };
 
   // Toggle cart visibility
   const setCartOpens = () => {
-    console.log('Shopping cart clicked');
     setIsCartOpen(prev => !prev);
   };
 
   return (
-    <nav className={`bg-black text-white sticky top-0 left-0 right-0 z-50 transition-all duration-300 px-6 lg:px-10`}>
+    <nav className={`bg-black text-white sticky top-0 left-0 right-0 z-50 transition-all duration-300 px-6 lg:px-10 h-28 md`}>
       <div className="flex items-center justify-between py-2">
         {/* Mobile Menu Button */}
         <Sheet>
@@ -148,11 +144,11 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex justify-center space-x-6 lg:space-x-8 py-4">
+      <div className="relative hidden md:flex justify-center space-x-6 lg:space-x-8 py-4">
         {shoeTypes.map((type) => (
           <div
             key={type}
-            className={`cursor-pointer py-2 px-3 ${activeLink === type ? 'border-b-2 border-white' : ''}`}
+            className={`cursor-pointer py-2 px-3 ${activeLink === type ? 'border-b-2 border-black' : ''}`}
             onClick={(e) => handleShoeTypeClick(type, e)}
           >
             {type}
@@ -163,9 +159,8 @@ const Navbar: React.FC = () => {
       {/* Dropdown for Categories */}
       {activeLink && (
         <div
-          className="absolute bg-black h-auto w-44 border-2 border-t-slate-100 text-white z-10"
-          style={{ top: `${categoryPosition.left}px`, left: `${categoryPosition.left}px` }}
-        >
+          className="absolute bg-black h-auto w-44 border-2  border-t-slate-100 text-white z-10 mt-12"
+          style={{ top: `${categoryPosition.top}px`, left: `${categoryPosition.left}px` }}>
           <div className="container mx-auto px-4 py-2">
             <div className="grid grid-cols-1 gap-2">
               {shoeCategories[activeLink]?.map((category, index) => (
