@@ -12,15 +12,14 @@ export default function ImageThumbnail({
   onClick,
 }: ImageThumbnailProps) {
   return (
-    <Image
-      src={image}
-      alt="Product image"
-      width={100}
-      height={100}
-      onClick={onClick}
-      className={`cursor-pointer border ${
-        isSelected ? "border-black" : "border-transparent"
-      }`}
-    />
+    <div className=" w-full lg:w-auto">
+      <img
+        src={image}
+        alt="Product image"
+        onClick={onClick}
+        className={`cursor-pointer border w-28 h-28  ${isSelected ? "border-black" : "border-transparent"
+          }`}
+      />
+    </div>
   );
 }

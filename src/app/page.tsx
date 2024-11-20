@@ -49,7 +49,7 @@ const HomePage = () => {
       <HeroSection />
       <div className='px-4 md:px10'>
         <Carousel />
-        <MostPopularCategories products={products} />
+        <MostPopularCategories products={products} text={'Most Popular'} />
         <LoadMore />
       </div>
     </div>
