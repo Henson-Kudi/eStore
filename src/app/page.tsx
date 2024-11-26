@@ -47,7 +47,7 @@ const HomePage = () => {
   return (
     <div>
       <HeroSection />
-      <div className='px-4 md:px10'>
+      <div className='px-4 py-10 md:px10'>
         <Carousel />
         <MostPopularCategories products={products} text={'Most Popular'} />
         <LoadMore />

@@ -10,8 +10,8 @@ interface ProductCardProps {
 const MostPopularCategories: React.FC<ProductCardProps> = ({ products, text }) => {
   return (
     <>
-      <p className="text-3xl text-center mb-4 mt-4">{text}</p>
-    <div className='grid grid-cols-2 gap-4 px-2 lg:px-10  md:grid-cols-3 lg:grid-cols-4'>
+      <p className="text-2xl md:text-4xl text-center mb-4 font-bold font-sans md:pt-10 pt-5">{text}</p>
+    <div className='grid grid-cols-2 gap-4 px-2 lg:px-10  md:grid-cols-3 lg:grid-cols-4 md:pt-10 pt-5'>
 
       {products?.map((product) => (
         <ProductCard

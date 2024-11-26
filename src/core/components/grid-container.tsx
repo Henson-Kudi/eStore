@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import ProductCard from './product-card';
 import { FaThLarge, FaTh, FaThList } from 'react-icons/fa';
+import Filters from '../pages/collections/filter-shoes';
 
 export interface Product {
   id: number;
@@ -27,16 +28,21 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="flex justify-start mb-4 space-x-2 border-t-2 border-b-2 border-gray-300 ">
-        <button onClick={() => setGridLayout('three')} className="p-2">
-          <FaThLarge  className='bg-gray-100'/>
-        </button>
-        <button onClick={() => setGridLayout('four')} className="p-2">
-          <FaTh />
-        </button>
-        <button onClick={() => setGridLayout('six')} className="p-2">
-          <FaThList />
-        </button>
+      <div className="flex justify-between mb-4 items-center h-20  space-x-2 border-t-2 border-b-2 border-gray-300 ">
+        <div>
+          <button onClick={() => setGridLayout('three')} className="p-2">
+            <FaThLarge className='bg-gray-100' />
+          </button>
+          <button onClick={() => setGridLayout('four')} className="p-2">
+            <FaTh />
+          </button>
+          <button onClick={() => setGridLayout('six')} className="p-2">
+            <FaThList />
+          </button>
+        </div>
+
+        <Filters />
+
       </div>
       <div className={`grid gap-4 ${gridClasses[gridLayout]}`}>
         {products.map((product) => (

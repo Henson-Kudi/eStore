@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, description, price,
           {discount}% SAVE
         </span>
       </div>
-      <p className="mt-2 text-sm">
+      <p className="mt-2 text-lg">
         {description} - <span className="text-red-500">${price.toFixed(2)}</span>
       </p>
     </div>
