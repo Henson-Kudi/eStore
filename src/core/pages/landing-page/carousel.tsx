@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 
@@ -6,28 +7,28 @@ import React, { useState } from 'react';
 
 export const images = [
   {
-    src: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2hvZXN8ZW58MHx8MHx8fDA%3D',
-    text: 'Image 1',
+    src: 'https://images.unsplash.com/photo-1616615965190-08884c4d85c4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGFkZGlkYXN8ZW58MHx8MHx8fDA%3D',
+    text: 'Addidas',
   },
   {
-    src: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2hvZXN8ZW58MHx8MHx8fDA%3D',
-    text: 'Image 2',
+    src: 'https://images.unsplash.com/photo-1641203639735-3eadf983e615?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fFB1bWElMjBzaG9lc3xlbnwwfHwwfHx8MA%3D%3D',
+    text: 'Puma',
   },
   {
-    src: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2hvZXN8ZW58MHx8MHx8fDA%3D',
-    text: 'Image 3',
+    src: 'https://plus.unsplash.com/premium_photo-1667762240969-c1b16cf23a1c?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8UHVtYSUyMHNob2VzfGVufDB8fDB8fHww',
+    text: 'Puma T',
   },
   {
-    src: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2hvZXN8ZW58MHx8MHx8fDA%3D',
-    text: 'Image 4',
+    src: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fFdhbGFjaGUlMjBzaG9lc3xlbnwwfHwwfHx8MA%3D%3D',
+    text: 'Walache',
   },
   {
-    src: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2hvZXN8ZW58MHx8MHx8fDA%3D',
-    text: 'Image 5',
+    src: 'https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGx1aXNlJTIwdmljdG9yJTIwc2hvZXN8ZW58MHx8MHx8fDA%3D',
+    text: 'Luise Victor',
   },
   {
-    src: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2hvZXN8ZW58MHx8MHx8fDA%3D',
-    text: 'Image 6',
+    src: 'https://images.unsplash.com/photo-1654130491481-dc83a0a05e4e?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG5pa2UlMjBzaG9lc3xlbnwwfHwwfHx8MA%3D%3D',
+    text: 'Nike',
   },
 ];
 
@@ -59,12 +60,12 @@ function Carousel() {
         )}
         <div className="grid grid-cols-3 w-[95%]  gap-4 md:grid-cols-3 md:pt-10 pt-5">
           {images.slice(currentIndex, currentIndex + 3).map((image, index) => (
-            <div key={index} className="relative text-center">
+            <Link href={'/collection'} key={index} className="relative text-center">
               <img src={image.src} alt={image.text} className="w-full" />
-              <div className="absolute bottom-10 md:w-[30%] sm:w-[20%] items-center left-0 right-0 bg-gray-300 bg-opacity-50 text-black sm-px md:py-2">
+              <div className="absolute bottom-10 md:w-[30%] sm:w-[20%] items-center left-0 right-0 bg-gray-300 bg-opacity-50 text-black sm-px md:py-4">
                 <p className="text-center">{image.text}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         {currentIndex < images.length - 3 && (
