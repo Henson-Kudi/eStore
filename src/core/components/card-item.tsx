@@ -23,8 +23,8 @@ const CartItem: React.FC<CartItemProps> = ({ item, onAdd, onRemove }) => {
       <div className="flex flex-col">
         <span className="font-semibold">{item.name}</span>
         <div className="flex mt-2">
-          <button onClick={onRemove} className="bg-red-500 text-white px-1 py-1 rounded">Remove</button>
-          <button onClick={onAdd} className="bg-black text-white px-1 py-1 rounded ml-2">Add</button>
+          <button onClick={onRemove} className="bg-red-500 text-white px-1 w-[80px] py-1 rounded">Remove</button>
+          <button onClick={onAdd} className="bg-black text-white px-1 py-1 w-[80px] rounded ml-2">Add</button>
         </div>
       </div>
     </div>

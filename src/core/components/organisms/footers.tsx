@@ -68,7 +68,7 @@ export default () => {
   ]
 
   return (
-    <footer className=" bg-black  px-8 md:h-[600px] h-[480px] flex flex-col gap-8">
+    <footer className=" bg-black  px-10 md:h-[600px] h-[480px] flex flex-col gap-8">
       <div className="gap-6 justify-between sm:flex sm:items-start pt-8">
         <div className=" flex flex-col gap-4">
           <div className="max-w-md flex flex-col gap-4">

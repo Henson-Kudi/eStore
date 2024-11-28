@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
   const [categoryPosition, setCategoryPosition] = useState({ top: 0, left: 0 });
   const navRef = useRef<HTMLDivElement>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
+  const dropdownRef = useRef<HTMLDivElement>(null);
   //display categories
 
   const handleShoeTypeClick = (type: string, event: React.MouseEvent<HTMLDivElement>) => {
@@ -164,9 +164,9 @@ const Navbar: React.FC = () => {
           <div className="container mx-auto px-4 py-2">
             <div className="grid grid-cols-1 gap-2">
               {shoeCategories[activeLink]?.map((category, index) => (
-                <div key={index} className="cursor-pointer text-lg">
+                <Link href={'/all-products'} key={index} className="cursor-pointer text-lg">
                   {category}
-                </div>
+                </Link>
               ))}
             </div>
           </div>
