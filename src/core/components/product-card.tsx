@@ -14,12 +14,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, description, price,
   return (
     <div className="flex flex-col">
       <div className="relative">
-        <Image src={imageUrl} alt="Product" width={300} height={300} className="w-full h-auto" />
+        <img src={imageUrl} alt="Shoe" className="w-full md:h-[450px] h-[300] object-cover" />
         <span className="absolute top-2 left-2 bg-red-500 text-white md:px-1 md:py-1 text-sm ">
           {discount}% SAVE
         </span>
       </div>
-      <p className="mt-2 text-lg">
+      <p className="mt-2 md:text-lg text-sm">
         {description} - <span className="text-red-500">${price.toFixed(2)}</span>
       </p>
     </div>
