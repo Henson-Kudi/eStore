@@ -6,7 +6,7 @@ import Description from "./Description";
 import ImageCarousel from "./ImageCarousel";
 import MainImage from "./MainImage";
 import { MostPopularCategories } from "../landing-page";
-import { products } from "@/app/page";
+import { products } from "@/lib/constants";
 
 export default function ProductDetails() {
   const sizes = ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45"];

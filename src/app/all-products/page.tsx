@@ -1,7 +1,6 @@
-import ProductCard from '@/core/components/product-card'
 import React from 'react'
-import { products } from '../page'
 import { MostPopularCategories } from '@/core/pages/landing-page'
+import { products } from '@/lib/constants'
 
 function AllProducts() {
   return (

@@ -1,6 +1,6 @@
 import ProductGrid from '@/core/components/grid-container'
+import { products } from '@/lib/constants'
 import React from 'react'
-import { products } from '@/app/page'
 
 function CollectionItems() {
   return (
