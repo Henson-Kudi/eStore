@@ -1,13 +1,38 @@
 import React from 'react'
-import { MostPopularCategories } from '@/core/pages/landing-page'
-import { products } from '@/lib/constants'
+import { dehydrate, DehydratedState, HydrationBoundary, QueryClient } from '@tanstack/react-query'
+import ProductsPage from '@/core/pages/products'
+import { notFound } from 'next/navigation'
+import { getProducts } from '../actions/products'
+import { productStatusKeys } from '@/types'
+import { dehydrateQuery } from '@/lib/dehydrateQuery'
 
-function AllProducts() {
+async function AllProducts({searchParams}:{searchParams: Record<string, string | string[]>}) {
+  const dehydratedState = await dehydrateQuery({
+    queryKey: ['products'],
+    queryFn: ()=>getProducts({
+      params:{
+        options:{
+            limit: 5,
+            page: 1,
+            withBrand: true,
+            withDiscounts: true,
+            withCategories: true
+        },
+        filter:{
+            status: productStatusKeys.ACTIVE
+        }
+      }
+    }),
+  })
+  
+  if (!dehydratedState) return notFound()
+
+  
   return (
-    <div className=' flex flex-col py-10 px-10'>
-      <p className=' text-4xl text-center font-bold font-sans'>ALL Products</p>
-      <MostPopularCategories  products={products}/>
-    </div>
+      
+    <HydrationBoundary state={dehydratedState}>
+      <ProductsPage />
+    </HydrationBoundary>
   )
 }
 

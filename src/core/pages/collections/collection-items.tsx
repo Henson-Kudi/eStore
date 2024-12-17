@@ -1,5 +1,4 @@
 import ProductGrid from '@/core/components/grid-container'
-import { products } from '@/lib/constants'
 import React from 'react'
 
 function CollectionItems() {
@@ -7,7 +6,7 @@ function CollectionItems() {
     <div className=' flex flex-col gap-4 py-10 justify-center'>
       <p className='font-bold lg:text-3xl mx-auto'>NEW BALANCE</p>
       <div className=''>
-        <ProductGrid products={products} />
+        <ProductGrid />
       </div>
     </div>
   )

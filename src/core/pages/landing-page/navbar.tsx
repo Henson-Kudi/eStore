@@ -1,114 +1,99 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react';
-import { ShoppingCart, User } from 'lucide-react';
+import { Menu, ShoppingCart, User, X } from 'lucide-react';
 import {
   Sheet,
   SheetTrigger,
-  SheetClose,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
 } from "@/components/ui/sheet"
 import Link from 'next/link';
 import SearchFromNavbar from '@/core/components/search-sheet';
-import CartSheet from '@/core/components/card-item';
-
-const cartItems = [
-  { id: 1, name: 'Product 1', image: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2hvZXN8ZW58MHx8MHx8fDA%3D' },
-  { id: 2, name: 'Product 2', image: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2hvZXN8ZW58MHx8MHx8fDA%3D' },
-];
-
-
-const shoeTypes = [
-  'Sneakers', 'Boots', 'Sandals', 'Loafers',
-  'Oxfords', 'Slip-ons', 'Athletic'
-];
-
-const shoeCategories: Record<string, string[]> = {
-  'Sneakers': ['Running', 'Casual', 'High-top', 'Low-top', 'Slip-on'],
-  'Boots': ['Ankle', 'Chelsea', 'Combat', 'Hiking', 'Work'],
-  'Sandals': ['Flip-flops', 'Slides', 'Gladiator'],
-  'Loafers': ['Penny', 'Tassel', 'Bit'],
-  'Oxfords': ['Plain', 'Cap Toe', 'Wingtip'],
-  'Slip-ons': ['Moccasin', 'Espadrille'],
-  'Athletic': ['Running', 'Basketball', 'Training'],
-
-};
+import ShoppingCartData from '@/core/components/cart';
+import { useCart } from '@/core/providers/cartProvider';
+import { Button } from '@/components/ui/button';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const Navbar: React.FC = () => {
-  const [activeLink, setActiveLink] = useState<string>('');
+  const {toggleCart, cartOpen, cart, isLoading, isError, error} = useCart()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [categoryPosition, setCategoryPosition] = useState({ top: 0, left: 0 });
-  const navRef = useRef<HTMLDivElement>(null);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname()
   //display categories
 
-  const handleShoeTypeClick = (type: string, event: React.MouseEvent<HTMLDivElement>) => {
-    if (activeLink === type) {
-      setActiveLink('');
-    } else {
-      setActiveLink(type);
-      const rect = event.currentTarget.getBoundingClientRect();
-      const parentRect = event.currentTarget.parentElement?.getBoundingClientRect();
-      if (parentRect) {
-        setCategoryPosition({
-          left: rect.left - parentRect.left,
-          top: rect.bottom - parentRect.top + 10
-        });
-      }
-    }
-    setIsMenuOpen(false);
-  };
-  // handling category click
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(event.target as Node)) {
-        setActiveLink('');
-      }
-    };
+  useEffect(()=>{
+    isMenuOpen && setIsMenuOpen(false)
+  }, [pathname])
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-
-  const handleCheckout = () => {
-    setIsCartOpen(prev => !prev);
-
-  };
-
-  // Toggle cart visibility
-  const setCartOpens = () => {
-    setIsCartOpen(prev => !prev);
-  };
 
   return (
-    <nav className={`bg-black text-white sticky top-0 left-0 right-0 z-50 transition-all duration-300 px-6 lg:px-10 h-28 md`}>
+    <nav className={`bg-black text-white sticky top-0 left-0 right-0 z-50 transition-all duration-300 px-6 lg:px-10 py-4`}>
       <div className="flex items-center justify-between py-2">
         {/* Mobile Menu Button */}
-        <Sheet>
+        <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
-            <button
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              ☰
-            </button>
+            <Avatar className='hover:bg-zinc-100 hover:text-black transition-all duration-150 ease-linear cursor-pointer md:hidden'>
+              <AvatarFallback className='bg-transparent'>
+                <Menu />
+              </AvatarFallback>
+            </Avatar>
           </SheetTrigger>
           <SheetContent>
-            <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
-              {shoeTypes.map((type) => (
-                <div
-                  key={type}
-                  className={`block py-2 border-b border-gray-300 ${activeLink === type ? 'hover:bg-gray-300' : ''}`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {type}
-                </div>
-              ))}
+            <SheetHeader>
+              <SheetTitle asChild>
+                <p className='text-center font-bold text-2xl'>PRESTIGE ATTIRE</p>
+              </SheetTitle>
+              <SheetDescription className='text-sm text-center'>
+                Explore our wide range of shoes and accessories.
+              </SheetDescription>
+            </SheetHeader>
+
+            <div className="p-2">
+              <Link
+                href={'/'}
+                className='w-full p-2'
+              >
+                Home
+              </Link>
             </div>
-            <SheetClose asChild></SheetClose>
+
+            <Separator />
+
+          <div className='p-2.5'>
+            <Link
+              href={'/all-products'}
+              className='w-full p-2'
+            >
+              All Products
+            </Link>
+          </div>
+
+          <Separator />
+
+          <div className="p-2">
+            <Link
+              href={'/blogs'}
+              className='w-full p-2'
+            >
+              Blogs
+            </Link>
+          </div>
+
+          <Separator />
+
+          <div className="p-2">
+            <Link
+              href={'/contact-us'}
+              className='w-full p-2'
+            >
+              Contact Us
+            </Link>
+          </div>
+          
           </SheetContent>
         </Sheet>
 
@@ -119,59 +104,66 @@ const Navbar: React.FC = () => {
           </Link>
         </div>
 
+        {/* Middle Section */}
+        <div className='hidden md:flex flex-1 items-center gap-4 justify-center'>
+          <Link href={'/'} className={cn('hover:border-b p-2', pathname === '/' && 'border-b')}>Home</Link>
+          <Link href={'/all-products'} className={cn('hover:border-b p-2', pathname.startsWith('/all-products') && 'border-b')}>All Products</Link>
+          <Link href={'/blogs'} className={cn('hover:border-b p-2', pathname.startsWith('/blogs') && 'border-b')}>Blogs</Link>
+          <Link href={'/contact-us'} className={cn('hover:border-b p-2', pathname.startsWith('/contact-us') && 'border-b')}>Contact Us</Link>
+        </div>
+
         {/* Right Section (Search, User, Cart) */}
         <div className="flex items-center space-x-2">
-          <div className="relative">
-            <SearchFromNavbar />
-          </div>
+          <SearchFromNavbar />
+          
           <Link href={'/sign-up'}>
-            <User className=" cursor-pointer hover:text-gray-600" />
+            <Avatar className='hover:bg-zinc-100 hover:text-black transition-all duration-150 ease-linear'>
+              <AvatarFallback className='bg-transparent'>
+                <User />
+              </AvatarFallback>
+            </Avatar>
           </Link>
 
-          <ShoppingCart
-            className="cursor-pointer hover:text-gray-600"
-            onClick={setCartOpens}
-          />
-
-          {/* Render CartSheet based on isCartOpen */}
-          <CartSheet
-            cartItems={cartItems}
-            onCheckout={handleCheckout}
-            isOpen={isCartOpen} // Pass the open state
-            onClose={() => setIsCartOpen(false)} // Pass the close function
-          />
+          <Sheet open={cartOpen} onOpenChange={toggleCart}>
+            <SheetTrigger asChild>
+              <Avatar className='hover:bg-zinc-100 hover:text-black transition-all duration-150 ease-linear cursor-pointer'>
+                <AvatarFallback className='bg-transparent'>
+                  <ShoppingCart />
+                </AvatarFallback>
+              </Avatar>
+              {/* <Button variant={'ghost'}>
+                
+              </Button> */}
+            </SheetTrigger>
+            <SheetContent side={'right'}>
+              <SheetHeader>
+                <SheetTitle className='text-center font-bold text-2xl'>
+                  Your Cart
+                </SheetTitle>
+                <SheetDescription className='text-sm text-center'>
+                  {
+                    !cart.length && !isLoading && 'Your cart is empty'
+                  }
+                </SheetDescription>
+              </SheetHeader>
+              {
+                isLoading ? (
+                  <div>Cart Loading... Fix this</div>
+                ) : !isLoading && isError ? (
+                  <div>Something went wrong: {error?.message}</div>
+                ) : !cart.length ? (
+                  <Button className='mt-6 rounded-lg'>
+                    <Link href={'/all-products'}>Start Adding Now</Link>
+                  </Button>
+                ) : (
+                  <ShoppingCartData />
+                )
+              }
+              
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-
-      {/* Desktop Menu */}
-      <div className="relative hidden md:flex justify-center space-x-6 lg:space-x-8 py-4">
-        {shoeTypes.map((type) => (
-          <div
-            key={type}
-            className={`cursor-pointer py-2 px-3 ${activeLink === type ? 'border-b-2 border-black' : ''}`}
-            onClick={(e) => handleShoeTypeClick(type, e)}
-          >
-            {type}
-          </div>
-        ))}
-      </div>
-
-      {/* Dropdown for Categories */}
-      {activeLink && (
-        <div
-          className="absolute bg-black h-auto w-44 border-2  border-t-slate-100 text-white z-10 mt-12"
-          style={{ top: `${categoryPosition.top}px`, left: `${categoryPosition.left}px` }}>
-          <div className="container mx-auto px-4 py-2">
-            <div className="grid grid-cols-1 gap-2">
-              {shoeCategories[activeLink]?.map((category, index) => (
-                <Link href={'/all-products'} key={index} className="cursor-pointer text-lg">
-                  {category}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </nav>
   );
 }
