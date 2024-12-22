@@ -40,22 +40,22 @@ export const PersonalInfoStep: React.FC<{handleNext: ()=>void}> = ({handleNext})
 
   if (!isLoggedIn && !isguest) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Not Logged In</CardTitle>
-          <CardDescription>
-            You're not currently logged in. Would you like to log in or continue as a guest?
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Link href={`/sign-in${callbackUrl?.length && `?callback_url=${callbackUrl}`}`} className="text-blue-600 hover:underline">
-            Log in and return to order
-          </Link>
-          <Button onClick={() => setIsguest(true)} className="w-full">
-            Continue as Guest
-          </Button>
-        </CardContent>
-      </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Not Logged In</CardTitle>
+            <CardDescription>
+              You're not currently logged in. Would you like to log in or continue as a guest?
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Link href={`/sign-in${callbackUrl?.length && `?callback_url=${callbackUrl}`}`} className="text-blue-600 hover:underline">
+              Log in and return to order
+            </Link>
+            <Button onClick={() => setIsguest(true)} className="w-full">
+              Continue as Guest
+            </Button>
+          </CardContent>
+        </Card>
     )
   }
 

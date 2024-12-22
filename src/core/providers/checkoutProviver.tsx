@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from 'react'
 import { CreateOrderDTO, ShippingAddress, OrderItem, OrderStatus } from '@/types/orders'
 import { useSession } from 'next-auth/react'
 import { useCart } from './cartProvider'
-import { useSearchParams } from 'next/navigation'
+// import { useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { getProducts } from '@/app/actions/products'
 
@@ -22,12 +22,12 @@ export const CheckoutProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [isguest, setIsguest] = useState<boolean>(false)
   const {status, data} = useSession()
   const {cart} = useCart()
-  const searchParams = useSearchParams()
+  // const searchParams = useSearchParams()
 
-  const productId = searchParams.get('product')
+  // const productId = searchParams.get('product')
 
   const filter = {
-    id: cart?.map(item => item?.productId).concat(productId??'')??[]
+    id: cart?.map(item => item?.productId)??[]
   }
 
   const {data: productData} = useQuery({
@@ -86,9 +86,9 @@ export const CheckoutProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }
 
   return (
-    <CheckoutContext.Provider value={{ orderData, updateOrderData, isLoggedIn: status === 'authenticated', isguest, setIsguest }}>
-      {children}
-    </CheckoutContext.Provider>
+      <CheckoutContext.Provider value={{ orderData, updateOrderData, isLoggedIn: status === 'authenticated', isguest, setIsguest }}>
+        {children}
+      </CheckoutContext.Provider>
   )
 }
 

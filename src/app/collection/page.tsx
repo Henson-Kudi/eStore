@@ -1,5 +1,3 @@
-import { CollectionItems} from '@/core/pages/collections'
-import { BreadcrumbWithCustomSeparator } from '@/core/pages/collections/bread-crumbs'
 import Component from './component'
 import { dehydrate, DehydratedState, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import { notFound } from 'next/navigation'

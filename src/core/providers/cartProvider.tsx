@@ -3,7 +3,7 @@
 import { getCart as get, addToCart as add, clearCart as clear, deleteCart as remove, updateCart as update } from "@/app/actions/cart"
 import { ReturnValue } from "@/types"
 import { Cart } from "@/types/cart"
-import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useSession } from "next-auth/react"
 import { usePathname } from "next/navigation"
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
@@ -150,8 +150,6 @@ export function CartProvider({children}:Props){
         }),
         [data, isFetching, isLoading, isError, error, cartOpen, session]
     );
-
-    console.log(contextValue)
 
     useEffect(()=>{
         cartOpen && toggleCart(false)

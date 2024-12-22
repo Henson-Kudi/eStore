@@ -1,11 +1,11 @@
 import { SignIn } from '@/core/pages/auth/sign-in'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 function SignInPage() {
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <SignIn />
-    </div>
+    </Suspense>
   )
 }
 
