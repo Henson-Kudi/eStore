@@ -11,6 +11,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'users-service-cd0t.onrender.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'placehold.co',
       },
     ]
