@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label"
 import { AlertCircle, CheckCircle2 } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 // import { verifyOtp } from "@/app/actions/auth"
-import { useParams, useRouter, useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
 import { getClientDeviceInfo } from "@/lib/utils"
 import { signIn } from "next-auth/react"
@@ -91,50 +91,50 @@ export default function VerifyOTP() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-full">
-      <div className="w-max p-8 space-y-6  rounded-xl shadow-md">
-        <h1 className="text-2xl font-bold text-center">Verify OTP</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <Label htmlFor="otp-input" className="sr-only">
-              Enter your OTP
-            </Label>
-            <div className="flex justify-between mt-2">
-              {otp.map((data, index) => (
-                <Input
-                  key={index}
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="one-time-code"
-                  pattern="\d{1}"
-                  maxLength={1}
-                  className="w-12 h-12 text-center text-xl font-semibold m-1"
-                  value={data}
-                  onChange={e => handleChange(e.target, index)}
-                  onFocus={e => e.target.select()}
-                />
-              ))}
+      <div className="flex items-center justify-center min-h-screen w-full">
+        <div className="w-max p-8 space-y-6  rounded-xl shadow-md">
+          <h1 className="text-2xl font-bold text-center">Verify OTP</h1>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <Label htmlFor="otp-input" className="sr-only">
+                Enter your OTP
+              </Label>
+              <div className="flex justify-between mt-2">
+                {otp.map((data, index) => (
+                  <Input
+                    key={index}
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    pattern="\d{1}"
+                    maxLength={1}
+                    className="w-12 h-12 text-center text-xl font-semibold m-1"
+                    value={data}
+                    onChange={e => handleChange(e.target, index)}
+                    onFocus={e => e.target.select()}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-          <Button type="submit" className="w-full">
-            Verify OTP
-          </Button>
-        </form>
-        {error && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-        {success && (
-          <Alert variant="default" className="bg-green-50 text-green-700 border-green-200">
-            <CheckCircle2 className="h-4 w-4" />
-            <AlertTitle>Success</AlertTitle>
-            <AlertDescription>OTP verified successfully!</AlertDescription>
-          </Alert>
-        )}
+            <Button type="submit" className="w-full">
+              Verify OTP
+            </Button>
+          </form>
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          {success && (
+            <Alert variant="default" className="bg-green-50 text-green-700 border-green-200">
+              <CheckCircle2 className="h-4 w-4" />
+              <AlertTitle>Success</AlertTitle>
+              <AlertDescription>OTP verified successfully!</AlertDescription>
+            </Alert>
+          )}
+        </div>
       </div>
-    </div>
   )
 }

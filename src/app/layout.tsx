@@ -19,11 +19,9 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-  searchParams
+  children
 }: Readonly<{
   children: React.ReactNode;
-  searchParams: Record<string, string | string[] | undefined>;
 }>) {
 
   return (
