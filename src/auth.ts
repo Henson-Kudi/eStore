@@ -104,7 +104,6 @@ export const config = {
             return true
         },
         async jwt({ token, user, account }) {
-            console.log(user, 'user object at jwt')
             // for first time login, we're gonna have a user object and an account object
             if (user) {
                 // if the user is a normal oauth user, then jwt did not wait for signin to complete, thus we just need to sign in again. Note: credentials signin will always have the user object from our backend so this is just for oauth providers
@@ -182,7 +181,7 @@ export const config = {
 
                 // Need some logic here
             } else {
-                session.user = { ...(session?.user??{}), id: token.userId as string, ...(token?.user ?? {}) } as User & AdapterUser
+                session.user = { ...(session?.user ?? {}), id: token.userId as string, ...(token?.user ?? {}) } as User & AdapterUser
             }
 
             session.requiresOtp = token.requiresOTP as boolean
@@ -210,8 +209,8 @@ export const config = {
     },
     // debug: true,
     session: {
-        strategy: 'jwt'
-    }
+        strategy: 'jwt',
+    },
 } satisfies NextAuthConfig
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config)

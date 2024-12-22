@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, ShoppingCart, User, X } from 'lucide-react';
 import {
   Sheet,
@@ -18,11 +18,19 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useSession } from 'next-auth/react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 const Navbar: React.FC = () => {
+  const {status} = useSession()
+
   const {toggleCart, cartOpen, cart, isLoading, isError, error} = useCart()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname()
+
+  const loggedIn = status === 'authenticated'
   //display categories
 
   useEffect(()=>{
@@ -116,13 +124,34 @@ const Navbar: React.FC = () => {
         <div className="flex items-center space-x-2">
           <SearchFromNavbar />
           
-          <Link href={'/sign-up'}>
+          {
+            loggedIn ? <>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar className='hover:bg-zinc-100 hover:text-black transition-all duration-150 ease-linear'>
+                    <AvatarFallback className='bg-transparent'>
+                      <User />
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>
+                    <Link href={'/account'}>Account</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Link href={'/orders'}>Orders</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </> : <Link href={'/sign-in'}>
             <Avatar className='hover:bg-zinc-100 hover:text-black transition-all duration-150 ease-linear'>
               <AvatarFallback className='bg-transparent'>
                 <User />
               </AvatarFallback>
             </Avatar>
           </Link>
+          }
 
           <Sheet open={cartOpen} onOpenChange={toggleCart}>
             <SheetTrigger asChild>
@@ -136,29 +165,52 @@ const Navbar: React.FC = () => {
               </Button> */}
             </SheetTrigger>
             <SheetContent side={'right'}>
-              <SheetHeader>
-                <SheetTitle className='text-center font-bold text-2xl'>
-                  Your Cart
-                </SheetTitle>
-                <SheetDescription className='text-sm text-center'>
+              <ScrollArea className="h-full max-h-screen overflow-y-auto w-full rounded-md relative flex flex-col  p-0 z-50 scrollbar-hide">
+                <div className='mb-6'>
+                  <SheetHeader>
+                    <SheetTitle className='font-bold text-2xl mb-4'>
+                      Your Cart
+                    </SheetTitle>
+                    
+                  </SheetHeader>
                   {
-                    !cart.length && !isLoading && 'Your cart is empty'
+
+                    !loggedIn ? (
+                      <div>
+                        <p>You need to be logged in to view your cart</p>
+                        <Button className='mt-6 rounded-lg'>
+                          <Link href={'/sign-in'}>Sign In</Link>
+                        </Button>
+                      </div>
+                    ) : (
+                      <div>
+                        {
+                          isLoading && <div>Loading... fix this</div>
+                        }
+
+                        {
+                          isError && <div>Something went wrong... {error?.message} ....fix this</div>
+                        }
+
+                        {
+                          !cart && !isLoading && !isError &&
+                            <>
+                              <p>Your cart is empty</p>
+                              <Button className='mt-6 rounded-lg'>
+                                <Link href={'/all-products'}>Shop Now</Link>
+                              </Button>
+                            </>
+                        }
+
+                        {
+                          cart && !isLoading && !isError && <ShoppingCartData />
+                        }
+                       
+                      </div>
+                    )
                   }
-                </SheetDescription>
-              </SheetHeader>
-              {
-                isLoading ? (
-                  <div>Cart Loading... Fix this</div>
-                ) : !isLoading && isError ? (
-                  <div>Something went wrong: {error?.message}</div>
-                ) : !cart.length ? (
-                  <Button className='mt-6 rounded-lg'>
-                    <Link href={'/all-products'}>Start Adding Now</Link>
-                  </Button>
-                ) : (
-                  <ShoppingCartData />
-                )
-              }
+                </div>
+              </ScrollArea>
               
             </SheetContent>
           </Sheet>

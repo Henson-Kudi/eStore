@@ -63,6 +63,7 @@ export function OrdersList() {
             ))}
           </TableBody>
         </Table>
+        
       </CardContent>
     </Card>
   )

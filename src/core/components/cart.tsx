@@ -1,51 +1,89 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import { Cart } from '@/types/cart';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import { getProducts } from '@/app/actions/products';
 import { Product } from '@/types/products';
-import { FileType } from '@/types';
+import { DiscountType, FileType } from '@/types';
 import envConf from '@/lib/env.conf';
 import { useCart } from '../providers/cartProvider';
 import Link from 'next/link';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-
-// Define props for the CartItem component
+import { Minus, Plus, Trash, X } from 'lucide-react'
 interface CartItemProps {
-  item: Cart;
+  item: Cart
   product?: Product
-  onAdd: () => void; // Function to add the item
-  onRemove: () => void; // Function to remove the item
+  // price: number
+  // quantity: number
+  // image: string
+  onRemove: (id: string) => void
+  onUpdateQuantity: (id: string, newQuantity: number) => void
 }
 
-const CartItem: React.FC<CartItemProps> = ({ item, onAdd, onRemove, product }) => {
-  const image = product?.media?.find((media) => media.type === FileType.IMAGE)?.url ?? ''
+export function CartItem({ item, product, onRemove, onUpdateQuantity }: CartItemProps) {
+  const handleIncrease = () => onUpdateQuantity(item?.id, item?.quantity + 1)
+  const handleDecrease = () => onUpdateQuantity(item?.id, Math.max(1, item?.quantity - 1))
 
-  const {removeFromCart, updateCart} = useCart()
-  
+  const image = useMemo(()=>product?.media?.find(img => img?.type === FileType.IMAGE)?.url || '', [product?.media])
+
+  const [productImage, setProductImage] = useState('/placeholder.svg')
+
+  const discountedPrice = (product?.originalPrice || 0) - (product?.discounts?.map(item => item?.discountType === DiscountType.FIXED_AMOUNT ? +item?.discountValue : +product?.originalPrice * (+item?.discountValue / 100)).reduce((a, b)=> a+b,0)??0)
+
+  useEffect(()=>{
+    image && setProductImage(`${envConf.apiBaseUrl}/users-service/files?url=${image}`)
+  },[image])
+
+  console.log(item)
+
   return (
-    <>
-      <div className="flex items-center justify-between p-2 border-b">
-        <Image
-          sizes='100vh'
-          width={0}
-          height={0}
-          src={image ?  `${envConf.apiBaseUrl}/users-service/files?url=${image}` : '/placeholder.svg'}
-          alt={'product image'}
-          className="h-16 w-16 object-cover"
-        />
-        <div className="flex flex-col">
-          <span className="font-semibold">{product?.name??'No Name'}</span>
-          <div className="flex mt-2">
-            <button onClick={onRemove} className="bg-red-500 text-white px-1 w-[80px] py-1 rounded">Remove</button>
-            <button onClick={onAdd} className="bg-black text-white px-1 py-1 w-[80px] rounded ml-2">Add</button>
+    <Card className="mb-4">
+      <CardContent className="flex items-center p-4">
+        <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+          <Image
+            src={`${envConf.apiBaseUrl}/users-service/files?url=${productImage}`}
+            alt={product?.name||'unknow product'}
+            sizes='100vh'
+            width={0}
+            height={0}
+            className='w-full h-full object-cover'
+            onError={() => setProductImage('/placeholder.svg')}
+          />
+        </div>
+        <div className="ml-4 flex flex-1 flex-col">
+          <div className="text-base font-medium text-gray-900">
+            <Link href={`/all-products/${product?.slug}`}>
+              <h3 className='capitalize line-clamp-2 text-ellipsis'>{product?.name}</h3>
+            </Link>
+            <p>{product?.currency||'AED'}{discountedPrice}
+              { discountedPrice !== product?.originalPrice && (
+              <span className="text-sm text-gray-500 line-through ml-2">{product?.currency??'AED'}{product?.originalPrice}</span>
+            )}
+            </p>
+          </div>
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center">
+              <Button variant="outline" size="icon" onClick={handleDecrease}>
+                <Minus className="h-4 w-4" />
+              </Button>
+              <span className="mx-2 w-8 text-center">{item?.quantity}</span>
+              <Button variant="outline" size="icon" onClick={handleIncrease}>
+                <Plus className="h-4 w-4" />
+              </Button>
+            </div>
+            
           </div>
         </div>
-      </div>
-    </>
-  );
-};
+      </CardContent>
+      <div className="flex relative">
+          <Button variant="ghost" className='w-max p-0 h-auto text-red-500 absolute right-2 bottom-2' onClick={() => onRemove(item?.id)} title='remove'>
+            <Trash className="h-4 w-4" />
+          </Button>
+        </div>
+    </Card>
+  )
+}
 
 // Define props for the CartSheet component
 interface CartSheetProps {
@@ -53,43 +91,71 @@ interface CartSheetProps {
 }
 
 const ShoppingCartData: React.FC<CartSheetProps> = ({}) => {
-  const {toggleCart, cart:cartItems} = useCart()
+  const {cart:cartItems, removeFromCart, updateCart, clearCart} = useCart()
 
   const {data} = useQuery({
-    queryKey: ['products'],
+    queryKey: ['cart-products'],
     queryFn: ()=>getProducts({
       params:{
         filter: {
-          id: cartItems.map(item => item.productId)
+          id: cartItems?.map(item => item.productId)
         }
       }
     }),
-    enabled: cartItems.length > 0
+    enabled: cartItems && cartItems?.length > 0 ? true : false
   })
 
   const products = data?.data?.data ?? []
 
   return (
     <Suspense fallback={<div>Loading....</div>}>
-      <Card>
+      <>
         {
-          cartItems.map((item) => (
+          cartItems?.length ? 
+            <div className='border p-1 cursor-pointer flex ml-auto mb-2 text-xs w-max' onClick={clearCart}><Trash className='mr-2 w-4 h-4 text-red-500 inline'/>  <span>Empty Card</span></div> : null
+            
+        }
+        {
+          cartItems?.map((item) => (
             <CartItem
               key={item.id}
               item={item}
-              onAdd={() => console.log(`Add ${item.productId}`)}
-              onRemove={() => console.log(`Remove ${item.productId}`)}
+
+              onUpdateQuantity={async(id, qty) => await updateCart({productId: item.productId, quantity: qty, id})}
+              onRemove={(id) => removeFromCart(id)}
               product={products?.find(pdt => pdt?.id === item?.productId)}
             />
           ))
         }
-        <Link
+
+        {
+          !cartItems?.length && <>
+          <p className='text-sm text-center'>Your cart is empty</p>
+          </>
+        }
+
+        {
+          cartItems?.length ? <Link
           href={'/checkout'}
-          className="w-full bg-black text-white py-2 rounded  mt-52"
+          className="rounded-sm m-2 flex justify-center"
         >
-          Checkout
+          <Button
+            className="w-full bg-black text-white py-2 rounded-3xl shadow-3xl  mt-6"
+          >
+            Checkout
+          </Button>
+        </Link> : <Link
+          href={'/all-products'}
+          className="rounded-sm m-2 flex justify-center"
+        >
+          <Button
+            className="w-full bg-black text-white py-2 rounded-3xl shadow-3xl  mt-6"
+          >
+            Start Shopping Now
+          </Button>
         </Link>
-      </Card>
+        }
+      </>
     </Suspense>
 );
 

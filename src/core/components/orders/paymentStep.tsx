@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query'
 import { createOrder } from '@/app/actions/orders'
 import { useSession } from 'next-auth/react'
 import { useToast } from '@/hooks/use-toast'
+import { useCart } from '@/core/providers/cartProvider'
 
 
 const paymentMethods = [
@@ -25,6 +26,7 @@ const paymentMethods = [
 
 export const PaymentStep: React.FC = () => {
   const { isLoggedIn, orderData, updateOrderData } = useCheckout()
+  const {clearCart} = useCart()
   const [paymentMethod, setPaymentMethod] = useState(orderData?.paymentId === 'cod' ? orderData?.paymentId : 'cod')
   const [couponCode, setCouponCode] = useState('')
   const { data } = useSession()
@@ -82,6 +84,7 @@ export const PaymentStep: React.FC = () => {
     // Here you would typically submit the order to your backend
     try {
       await orderMutation.mutateAsync()
+      await clearCart()
     } catch (err) {
       console.log(err, 'order creation error')
     }

@@ -5,7 +5,6 @@ import { AxiosRequestConfig } from "axios";
 
 export async function getCart(config?: AxiosRequestConfig) {
     try {
-        console.log(config, 'confif')
         const { data } = await api.get<ReturnValueWithPagination<Cart>>('/cart-service/cart', config)
 
         return data
@@ -20,9 +19,9 @@ export async function addToCart(cart: Partial<Omit<Cart, 'id'>>, config?: AxiosR
     return data
 }
 
-export async function updateCart(id: string, cart: Partial<Cart>, config?: AxiosRequestConfig) {
+export async function updateCart(cart: Partial<Cart>, config?: AxiosRequestConfig) {
     try {
-        const { data } = await api.put<ReturnValue<Cart>>(`/cart-service/cart/${id}`, cart, config)
+        const { data } = await api.put<ReturnValue<Cart>>(`/cart-service/cart/`, cart, config)
 
         return data
     } catch (err) {
@@ -32,7 +31,13 @@ export async function updateCart(id: string, cart: Partial<Cart>, config?: Axios
 
 export async function deleteCart(id: string, config?: AxiosRequestConfig) {
     try {
-        const { data } = await api.delete<ReturnValue<Cart>>(`/cart-service/cart/${id}`, config)
+        const { data } = await api.delete<ReturnValue<Cart>>(`/cart-service/cart`, {
+            ...config,
+            params:{
+                ...config?.params,
+                id
+            }
+        })
 
         return data
     } catch (err) {
