@@ -1,3 +1,4 @@
+import envConf from "@/lib/env.conf";
 import Image from "next/image";
 
 interface ImageThumbnailProps {
@@ -13,11 +14,13 @@ export default function ImageThumbnail({
 }: ImageThumbnailProps) {
   return (
     <div className=" w-full lg:w-auto">
-      <img
-        src={image}
+      <Image
+        src={`${envConf.apiBaseUrl}/users-service/files?url=${image}`}
         alt="Product image"
         onClick={onClick}
-        className={`cursor-pointer border w-28 h-28  ${isSelected ? "border-black" : "border-transparent"
+        width={112}
+        height={112}
+        className={`cursor-pointer border w-28 h-28 object-cover  ${isSelected ? "border-black" : "border-transparent"
           }`}
       />
     </div>

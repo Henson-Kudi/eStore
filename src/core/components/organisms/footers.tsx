@@ -1,72 +1,6 @@
 "use client"
 export default () => {
 
-  const footerNavs = [
-    {
-      label: "Company",
-      items: [
-        {
-          href: 'javascript:void()',
-          name: 'Partners'
-        },
-        {
-          href: 'javascript:void()',
-          name: 'Blog'
-        },
-        {
-          href: 'javascript:void()',
-          name: 'Team'
-        },
-        {
-          href: 'javascript:void()',
-          name: 'Careers'
-        },
-      ],
-    },
-    {
-      label: "Resources",
-      items: [
-        {
-          href: 'javascript:void()',
-          name: 'contact'
-        },
-        {
-          href: 'javascript:void()',
-          name: 'Support'
-        },
-        {
-          href: 'javascript:void()',
-          name: 'Docs'
-        },
-        {
-          href: 'javascript:void()',
-          name: 'Pricing'
-        },
-      ],
-    },
-    {
-      label: "About",
-      items: [
-        {
-          href: 'javascript:void()',
-          name: 'Terms'
-        },
-        {
-          href: 'javascript:void()',
-          name: 'License'
-        },
-        {
-          href: 'javascript:void()',
-          name: 'Privacy'
-        },
-        {
-          href: 'javascript:void()',
-          name: 'About US'
-        },
-      ]
-    }
-  ]
-
   return (
     <footer className=" bg-black  px-10 md:h-[600px] h-[480px] flex flex-col gap-8">
       <div className="gap-6 justify-between sm:flex sm:items-start pt-8">
@@ -103,13 +37,6 @@ export default () => {
           &copy; 2022 - PRESTIGE ATTIRE.
         </div>
       </div>
-      <style jsx>{`
-              .svg-icon path,
-              .svg-icon polygon,
-              .svg-icon rect {
-                  fill: currentColor;
-              }
-          `}</style>
     </footer>
   )
 }

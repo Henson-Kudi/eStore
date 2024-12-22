@@ -1,7 +1,6 @@
 
 import React from 'react'
-import { HeroSection, MostPopularCategories, Carousel, LoadMore } from "@/core/pages/landing-page/index"
-import { products } from '@/lib/constants'
+import { HeroSection, MostPopularProducts, LoadMore } from "@/core/pages/landing-page/index"
 
 
 const HomePage = () => {
@@ -9,9 +8,9 @@ const HomePage = () => {
     <div>
       <HeroSection />
       <div className='px-4 py-10 md:px10'>
-        <Carousel />
-        <MostPopularCategories products={products} text={'Most Popular'} />
-        <LoadMore />
+        <p className="text-2xl md:text-4xl text-center mb-4 font-bold font-sans pt-5">Most Popular Products</p>
+        <MostPopularProducts />
+        <LoadMore text='View All' />
       </div>
     </div>
   )

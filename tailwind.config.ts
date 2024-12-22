@@ -9,6 +9,7 @@ const config = {
     './src/**/*.{ts,tsx}',
   ],
   prefix: "",
+
   theme: {
     container: {
       center: true,
@@ -32,6 +33,12 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      screens: {
+        'xs': '500px',
+        '2xs': '425px',
+        '3xs': '375px',
+        '4xs': '320px'
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -1,66 +1,64 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Sheet,
   SheetTrigger,
   SheetClose,
   SheetContent,
-  SheetOverlay,
 } from "@/components/ui/sheet"
-import { Product } from "@/core/components/grid-container";
-import { FaSearch } from 'react-icons/fa';
-import { MostPopularCategories } from '../pages/landing-page';
+
+import { MostPopularProducts } from '../pages/landing-page';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
-import { products } from '@/lib/constants';
-
-const otherCategories = ["Puma", "Puma Nike", "Puma Min"]
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 function SearchFromNavbar() {
-  const [isSearch, setIsSearch] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const pathname = usePathname()
 
-  function handleSearch() {
-    setIsSearch(true)
-  }
+  useEffect(()=>{
+    popoverOpen && setPopoverOpen(false)
+  },[pathname])
+
 
   return (
-    <Sheet>
-      {/* <SheetOverlay> */}
-        <SheetTrigger asChild>
-          <Search className="invisible md:visible absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer hover:text-gray-600" onClick={handleSearch} />
-        </SheetTrigger>
-        <SheetContent side={'top'}>
-          <div className=' flex  flex-col gap-4'>
-            <input
-              type="text"
-              placeholder='SEARCH...'
-              className='text-white  py-2'
-              style={{ border: 'none', outline: 'none' }}
-            />
-            <div className=' flex flex-col border-t-2 border-t-slate-400 py-4'>
-              <div className='grid grid-cols-4 '>
-                <div className='col-span-1'>
-                  <div className='text-white'>
-                    {otherCategories.map((text, i) => <p key={i}>{text}</p>)}
-                  </div>
-                </div>
-                <div className='col-span-3 flex flex-col items-center'>
-                  <MostPopularCategories products={products} />
-                </div>
-                <div className='mt-4'>
-                  <Button variant={'default'} className='bg-white text-black'>
-                    View All Results
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+    <>
+      <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+        {/* <SheetOverlay> */}
+          <PopoverTrigger>
+            <Avatar className='hover:bg-zinc-100 hover:text-black transition-all duration-150 ease-linear' onClick={()=>setPopoverOpen(true)}>
+              <AvatarFallback className='bg-transparent'>
+                <Search className='w-4 h-4 md:w-5 md:h-5' />
+              </AvatarFallback>
+            </Avatar>
+          </PopoverTrigger>
+          <PopoverContent side={'left'} className='bg-transparent bg-opacity-20 p-0 md:min-w-[500px] rounded-md border-0 relative' >
+            <div className='fixed top-0 left-0 w-full inset-0 z-50 md:relative'>
+              <Input className='w-full' placeholder='What are you looking for?...' value={searchValue} onChange={(e)=>setSearchValue(e.target.value)}/>
 
-          <SheetClose asChild>
-          </SheetClose>
-        </SheetContent>
-      {/* </SheetOverlay> */}
-    </Sheet>
+              {
+                searchValue.length > 0 && (
+                  <div className=' flex  flex-col gap-4 bg-white p-2 mt-2 rounded-md'>
+                    <Link href={`/all-products/${1}`} className='p-0.5'>Option 1</Link>
+                    <Separator/>
+                    <Link href={`/all-products/${1}`} className='p-0.5'>Option 2</Link>
+                    <Separator/>
+                    <Link href={`/all-products/${1}`} className='p-0.5'>Option 2</Link>
+                    <Separator/>
+                  </div>
+                )
+              }
+            </div>
+          </PopoverContent>
+        {/* </SheetOverlay> */}
+      </Popover>
+    </>
   )
 }
 
